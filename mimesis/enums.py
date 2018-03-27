@@ -17,10 +17,30 @@ Example:
     'Antonetta Garrison'
 """
 
-from enum import Enum
+from enum import Enum, EnumMeta
 
 
-class PortRange(Enum):
+class MimesisEnumMeta(EnumMeta):
+    """Updated metaclass with index support."""
+
+    def __getitem__(self, key):
+        """Return enum item if it exist.
+
+        :param key: index or name
+        :return: enum item
+        """
+        if isinstance(key, int):
+            key = self._member_names_[key]
+        return self._member_map_[key]
+
+
+class EnumMixin(metaclass=MimesisEnumMeta):
+    """Enum mixin with updated metaclass."""
+
+    pass
+
+
+class PortRange(EnumMixin, Enum):
     """Represents port ranges.
 
     Value for a method ``Internet.port()`` which
@@ -33,7 +53,7 @@ class PortRange(Enum):
     REGISTERED = (1024, 49151)
 
 
-class Gender(Enum):
+class Gender(EnumMixin, Enum):
     """Represents genders.
 
     Value for a lot of methods which
@@ -44,7 +64,7 @@ class Gender(Enum):
     MALE = 'male'
 
 
-class TitleType(Enum):
+class TitleType(EnumMixin, Enum):
     """Represents title types.
 
     Value for a method ``Person.title()`` which
@@ -55,7 +75,7 @@ class TitleType(Enum):
     ACADEMIC = 'academic'
 
 
-class CardType(Enum):
+class CardType(EnumMixin, Enum):
     """Provides cart types.
 
     Value for a method ``Payment.credit_card_number()`` which
@@ -67,7 +87,7 @@ class CardType(Enum):
     AMERICAN_EXPRESS = 'American Express'
 
 
-class Algorithm(Enum):
+class Algorithm(EnumMixin, Enum):
     """Provides algorithms which available.
 
     Value for methods which take argument ``algorithm``.
@@ -81,7 +101,7 @@ class Algorithm(Enum):
     SHA512 = 'sha512'
 
 
-class TLDType(Enum):
+class TLDType(EnumMixin, Enum):
     """Provides top level domain types.
 
     Value for a method ``Internet.top_level_domain()``
@@ -95,7 +115,7 @@ class TLDType(Enum):
     STLD = 'stld'
 
 
-class Layer(Enum):
+class Layer(EnumMixin, Enum):
     """Provides network protocol layers.
 
     Value for method ``Internet.network_protocol()`` which
@@ -111,7 +131,7 @@ class Layer(Enum):
     TRANSPORT = 'transport'
 
 
-class FileType(Enum):
+class FileType(EnumMixin, Enum):
     """Provides file types.
 
     Value for methods which takes parameter ``file_type``.
@@ -127,7 +147,7 @@ class FileType(Enum):
     COMPRESSED = 'compressed'
 
 
-class MimeType(Enum):
+class MimeType(EnumMixin, Enum):
     """Provides common mime types.
 
     Value for method ``File.mime_type()`` which
@@ -142,7 +162,7 @@ class MimeType(Enum):
     VIDEO = 'video'
 
 
-class PrefixSign(Enum):
+class PrefixSign(EnumMixin, Enum):
     """Provides prefix signs.
 
     Value for method ``UnitSystem.prefix()`` which
@@ -153,7 +173,7 @@ class PrefixSign(Enum):
     NEGATIVE = 'negative'
 
 
-class CountryCode(Enum):
+class CountryCode(EnumMixin, Enum):
     """Provides types of country codes.
 
     Value for method ``Address.country_code()`` which
@@ -167,7 +187,7 @@ class CountryCode(Enum):
     FIFA = 'fifa'
 
 
-class ISBNFormat(Enum):
+class ISBNFormat(EnumMixin, Enum):
     """Provides formats of ISBN.
 
     Value for method ``Code.isbn()`` which
@@ -178,7 +198,7 @@ class ISBNFormat(Enum):
     ISBN10 = 'isbn-10'
 
 
-class EANFormat(Enum):
+class EANFormat(EnumMixin, Enum):
     """Provides formats of EAN.
 
     Value for method ``Code.ean()`` which
@@ -189,7 +209,7 @@ class EANFormat(Enum):
     EAN13 = 'ean-13'
 
 
-class SocialNetwork(Enum):
+class SocialNetwork(EnumMixin, Enum):
     """Provides most popular social networks.
 
     Value for method ``Person.social_media_profile()`` which
@@ -202,7 +222,7 @@ class SocialNetwork(Enum):
     VK = 'vk'
 
 
-class UnitName(Enum):
+class UnitName(EnumMixin, Enum):
     """Provide unit names.
 
     Value for method ``UnitSystem.unit()`` which
